@@ -37,10 +37,10 @@ public class DebtorAccount   {
    * Get identification
    * @return identification
   **/
-  @ApiModelProperty(example = "00100", required = true, value = "")
+  @ApiModelProperty(example = "00000001002000000000", required = true, value = "")
   @NotNull
 
-@Pattern(regexp="^\\d{5}$") @Size(min=5,max=5) 
+  @Pattern(regexp="^\\d{8,20}$") 
   public String getIdentification() {
     return identification;
   }
@@ -58,10 +58,10 @@ public class DebtorAccount   {
    * Get secundaryIdentification
    * @return secundaryIdentification
   **/
-  @ApiModelProperty(example = "00000001002000000000", required = true, value = "")
+  @ApiModelProperty(example = "03700", required = true, value = "")
   @NotNull
 
-@Pattern(regexp="^\\d{8,20}$") @Size(min=8,max=20) 
+@Pattern(regexp="^\\d{5}$")
   public String getSecundaryIdentification() {
     return secundaryIdentification;
   }
