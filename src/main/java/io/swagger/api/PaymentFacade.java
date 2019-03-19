@@ -84,6 +84,7 @@ public final class PaymentFacade {
 			jsonInString = objectMapper.writeValueAsString(body.getPayment());
 			PaymentDTO paymentDTO = objectMapper.readValue(jsonInString, PaymentDTO.class);
 			paymentDTO.setId(body.getOrderId());
+			paymentDTO.setCreationDate(new Date());
 			paymentApi.addUserUsingPOST(paymentDTO);
 		} catch (IOException e) {
 			throw new ApiException();

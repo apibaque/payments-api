@@ -80,14 +80,15 @@ public class PaymentOrderApiController implements PaymentOrderApi {
             	PaymentOrderResponse response = new PaymentOrderResponse();
             	response.setOrderId(dto.getId());
             	response.setTransactionId(new BigDecimal(dto.getTransactionId()));
-            	response.setPayment(body.getPayment());
+            	response.setPayment(body.getPayment());            	           
             	
                 return new ResponseEntity<PaymentOrderResponse>(response, HttpStatus.OK);
-            	// return new ResponseEntity<PaymentOrderResponse>(objectMapper.readValue("{  \"orderId\" : \"12345\",  \"payment\" : {    \"debtorAccount\" : {      \"identification\" : \"00100\",      \"name\" : \"Santander\",      \"destinationDNI\" : \"14000000\"    },    \"creditorAccount\" : {      \"identification\" : \"00100\",      \"name\" : \"Santander\",      \"destinationDNI\" : \"14000000\"    },    \"instructedAmount\" : {      \"amount\" : 100000.0,      \"currency\" : 152.0    },    \"status\" : \"APPROVED\"  },  \"transactionId\" : \"000012345\"}", PaymentOrderResponse.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (ApiException e) {
             	log.error(ERROR_PROCESS_SERVICE, e);
                 return new ResponseEntity<PaymentOrderResponse>(HttpStatus.valueOf(e.getCode()));
 			}
+            
+            
         }
 
         return new ResponseEntity<PaymentOrderResponse>(HttpStatus.NOT_IMPLEMENTED);
@@ -97,7 +98,7 @@ public class PaymentOrderApiController implements PaymentOrderApi {
         String accept = request.getHeader(ACCEPT);
         if (accept != null && accept.contains("application/json")) {
             try {
-            	log.debug("[getPayment] : Add new payment: " + body);
+            	log.info("[getPayment] : Add new payment: " + body);
             	PaymentFacade.addPaymentOrder(body);
                 return new ResponseEntity<PaymentOrderConsentResponse>(objectMapper.readValue("{  \"orderId\" : \"" + body.getOrderId() + "\",  \"description\" : \"Payment order consent created\"}", PaymentOrderConsentResponse.class), HttpStatus.CREATED);
             } catch (IOException e) {
