@@ -135,7 +135,8 @@ public class PaymentControllerApi {
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<PaymentDTO> addUserUsingPOSTWithHttpInfo(PaymentDTO payment) throws ApiException {
-        com.squareup.okhttp.Call call = addUserUsingPOSTValidateBeforeCall(payment, null, null);
+        System.out.println("addUserUsingPOSTWithHttpInfo: " + payment.toString());
+    	com.squareup.okhttp.Call call = addUserUsingPOSTValidateBeforeCall(payment, null, null);
         Type localVarReturnType = new TypeToken<PaymentDTO>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
