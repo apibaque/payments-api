@@ -56,6 +56,9 @@ public class PaymentDTO {
 	 */
 	@JsonAdapter(StatusEnum.Adapter.class)
 	public enum StatusEnum {
+		
+		PENDING("PENDING"),
+		
 		APPROVED("APPROVED"),
 
 		REJECTED("REJECTED");
@@ -250,6 +253,7 @@ public class PaymentDTO {
 
 		sb.append("    creditorAccount: ").append(toIndentedString(creditorAccount)).append("\n");
 		sb.append("    debtorAccount: ").append(toIndentedString(debtorAccount)).append("\n");
+		sb.append("    creationDate: ").append(toIndentedString(creationDate)).append("\n");
 		sb.append("    id: ").append(toIndentedString(id)).append("\n");
 		sb.append("    instructedAmount: ").append(toIndentedString(instructedAmount)).append("\n");
 		sb.append("    status: ").append(toIndentedString(status)).append("\n");
