@@ -120,6 +120,7 @@ public final class PaymentFacade {
 						debtorAccount.setDestinationDNI(paymentDTO.getDebtorAccount().getDestinationDNI());
 						debtorAccount.setIdentification(paymentDTO.getDebtorAccount().getIdentification());
 						debtorAccount.setName(paymentDTO.getDebtorAccount().getName());
+
 						
 						payment.setDebtorAccount(debtorAccount);
 						
@@ -150,6 +151,7 @@ public final class PaymentFacade {
 				
 			};
 			thread.start();
+			
 			return paymentApi.updateUsingPOST(paymentDTO);
 		} catch (IOException e) {
 			throw new ApiException();

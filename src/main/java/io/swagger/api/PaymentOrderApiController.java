@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
 import io.swagger.client.ApiException;
 import io.swagger.client.model.PaymentDTO;
+import io.swagger.model.Payment.StatusEnum;
 import io.swagger.model.PaymentOrderConsentResponse;
 import io.swagger.model.PaymentOrderRequest;
 import io.swagger.model.PaymentOrderResponse;
@@ -58,7 +59,7 @@ public class PaymentOrderApiController implements PaymentOrderApi {
     	
         if (accept != null && accept.contains("application/json")) {
             try {
-            	log.debug("[getPayment] : Get payment for order ID " + orderId);
+            	log.info("[getPayment] : Get payment for order ID " + orderId);
             	return new ResponseEntity<PaymentOrderResponse>(PaymentFacade.getPayment(orderId), HttpStatus.OK);
             } catch (ApiException e) {
             	log.error("Service error: " + e.getResponseBody());
@@ -69,19 +70,25 @@ public class PaymentOrderApiController implements PaymentOrderApi {
         return new ResponseEntity<PaymentOrderResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 
+	@SuppressWarnings("unlikely-arg-type")
 	public ResponseEntity<PaymentOrderResponse> paymentOrder(@ApiParam(value = "" ,required=true )  @Valid @RequestBody PaymentOrderRequest body,@ApiParam(value = "The JWT Token generated from Get API Token" ) @RequestHeader(value="x-dnbapi-jwt", required=false) String xDnbapiJwt,@ApiParam(value = "The API key from your app page in DNB Developer" ) @RequestHeader(value="x-api-key", required=false) String xApiKey) {
         String accept = request.getHeader(ACCEPT);
         if (accept != null && accept.contains("application/json")) {
             try {
-            	log.debug("[getPayment] : Process payment: " + body);
+            	log.info("[postPaymentUpdate] : Process payment: " + body);
             	
             	PaymentDTO dto = PaymentFacade.updatePaymentOrder(body);
+
             	
             	PaymentOrderResponse response = new PaymentOrderResponse();
             	response.setOrderId(dto.getId());
             	response.setTransactionId(new BigDecimal(dto.getTransactionId()));
-            	response.setPayment(body.getPayment());            	           
+          
+            	response.setOperationDate(org.threeten.bp.DateTimeUtils.toInstant(dto.getCreationDate()));            	 
             	
+            	getStatusEnum(dto,body);
+            	response.setPayment(body.getPayment());            	           
+
                 return new ResponseEntity<PaymentOrderResponse>(response, HttpStatus.OK);
             } catch (ApiException e) {
             	log.error(ERROR_PROCESS_SERVICE, e);
@@ -94,7 +101,17 @@ public class PaymentOrderApiController implements PaymentOrderApi {
         return new ResponseEntity<PaymentOrderResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<PaymentOrderConsentResponse> paymentOrderConsent(@ApiParam(value = "" ,required=true )  @Valid @RequestBody PaymentOrderRequest body,@ApiParam(value = "The JWT Token generated from Get API Token" ) @RequestHeader(value="x-dnbapi-jwt", required=false) String xDnbapiJwt,@ApiParam(value = "The API key from your app page in DNB Developer" ) @RequestHeader(value="x-api-key", required=false) String xApiKey) {
+    private void getStatusEnum(PaymentDTO dto, PaymentOrderRequest body) {
+    	if(dto.getStatus().name().equals(StatusEnum.APPROVED.name()))
+    		body.getPayment().setStatus(StatusEnum.APPROVED);
+    	else if(dto.getStatus().name().equals(StatusEnum.REJECTED.name()))
+    		body.getPayment().setStatus(StatusEnum.REJECTED);
+    	else
+    		body.getPayment().setStatus(StatusEnum.PENDING);
+		
+	}
+
+	public ResponseEntity<PaymentOrderConsentResponse> paymentOrderConsent(@ApiParam(value = "" ,required=true )  @Valid @RequestBody PaymentOrderRequest body,@ApiParam(value = "The JWT Token generated from Get API Token" ) @RequestHeader(value="x-dnbapi-jwt", required=false) String xDnbapiJwt,@ApiParam(value = "The API key from your app page in DNB Developer" ) @RequestHeader(value="x-api-key", required=false) String xApiKey) {
         String accept = request.getHeader(ACCEPT);
         if (accept != null && accept.contains("application/json")) {
             try {
