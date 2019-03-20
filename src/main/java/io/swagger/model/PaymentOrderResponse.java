@@ -11,7 +11,11 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
+
+import org.threeten.bp.Instant;
 import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.ZoneId;
+
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -171,5 +175,14 @@ public class PaymentOrderResponse   {
     }
     return o.toString().replace("\n", "\n    ");
   }
+
+
+
+public void setOperationDate(Instant instant) {
+	 
+	//org.threeten.bp.DateTimeUtils.toInstant - OffsetDateTime
+	operationDate = OffsetDateTime.ofInstant(instant,	ZoneId.of("America/Santiago") );
+	
+}
 }
 

@@ -19,8 +19,8 @@ public class CreditorAccount   {
   @JsonProperty("identification")
   private String identification = null;
 
-  @JsonProperty("secundaryIdentification")
-  private String secundaryIdentification = null;
+  @JsonProperty("secondaryIdentification")
+  private String secondaryIdentification = null;
 
   @JsonProperty("name")
   private String name = null;
@@ -49,25 +49,25 @@ public class CreditorAccount   {
     this.identification = identification;
   }
 
-  public CreditorAccount secundaryIdentification(String secundaryIdentification) {
-    this.secundaryIdentification = secundaryIdentification;
+  public CreditorAccount secondaryIdentification(String secundaryIdentification) {
+    this.secondaryIdentification = secundaryIdentification;
     return this;
   }
 
   /**
-   * Get secundaryIdentification
-   * @return secundaryIdentification
+   * Get secondaryIdentification
+   * @return secondaryIdentification
   **/
   @ApiModelProperty(example = "03700", required = true, value = "")
   @NotNull
 
 @Pattern(regexp="^\\d{5}$") 
-  public String getSecundaryIdentification() {
-    return secundaryIdentification;
+  public String getSecondaryIdentification() {
+    return secondaryIdentification;
   }
 
-  public void setSecundaryIdentification(String secundaryIdentification) {
-    this.secundaryIdentification = secundaryIdentification;
+  public void setSecondaryIdentification(String secundaryIdentification) {
+    this.secondaryIdentification = secundaryIdentification;
   }
 
   public CreditorAccount name(String name) {
@@ -123,14 +123,14 @@ public class CreditorAccount   {
     }
     CreditorAccount creditorAccount = (CreditorAccount) o;
     return Objects.equals(this.identification, creditorAccount.identification) &&
-        Objects.equals(this.secundaryIdentification, creditorAccount.secundaryIdentification) &&
+        Objects.equals(this.secondaryIdentification, creditorAccount.secondaryIdentification) &&
         Objects.equals(this.name, creditorAccount.name) &&
         Objects.equals(this.destinationDNI, creditorAccount.destinationDNI);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(identification, secundaryIdentification, name, destinationDNI);
+    return Objects.hash(identification, secondaryIdentification, name, destinationDNI);
   }
 
   @Override
@@ -139,7 +139,7 @@ public class CreditorAccount   {
     sb.append("class CreditorAccount {\n");
     
     sb.append("    identification: ").append(toIndentedString(identification)).append("\n");
-    sb.append("    secundaryIdentification: ").append(toIndentedString(secundaryIdentification)).append("\n");
+    sb.append("    secundaryIdentification: ").append(toIndentedString(secondaryIdentification)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    destinationDNI: ").append(toIndentedString(destinationDNI)).append("\n");
     sb.append("}");
