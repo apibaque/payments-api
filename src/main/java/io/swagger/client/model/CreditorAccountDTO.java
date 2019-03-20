@@ -35,8 +35,8 @@ public class CreditorAccountDTO {
   @SerializedName("identification")
   private String identification = null;
   
-  @SerializedName("secundaryIdentification")
-  private String secundaryIdentification = null;
+  @SerializedName("secondaryIdentification")
+  private String secondaryIdentification = null;
 
   @SerializedName("name")
   private String name = null;
@@ -77,13 +77,19 @@ public class CreditorAccountDTO {
     this.identification = identification;
   }
   
-  public String getSecundaryIdentification() {
-		return secundaryIdentification;
+  @ApiModelProperty(value = "")
+  public String getSecondaryIdentification() {
+		return secondaryIdentification;
 	}
 
-	public void setSecundaryIdentification(String secundaryIdentification) {
-		this.secundaryIdentification = secundaryIdentification;
+	public void setSecondaryIdentification(String secundaryIdentification) {
+		this.secondaryIdentification = secundaryIdentification;
 	}
+	
+	public CreditorAccountDTO secundaryIdentification(String secondaryIdentification) {
+		this.secondaryIdentification = secondaryIdentification;
+		    return this;
+		  }
 
   public CreditorAccountDTO name(String name) {
     this.name = name;
@@ -115,13 +121,13 @@ public class CreditorAccountDTO {
     CreditorAccountDTO creditorAccountDTO = (CreditorAccountDTO) o;
     return Objects.equals(this.destinationDNI, creditorAccountDTO.destinationDNI) &&
         Objects.equals(this.identification, creditorAccountDTO.identification) &&
-        Objects.equals(this.secundaryIdentification, creditorAccountDTO.secundaryIdentification) &&
+        Objects.equals(this.secondaryIdentification, creditorAccountDTO.secondaryIdentification) &&
         Objects.equals(this.name, creditorAccountDTO.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(destinationDNI, identification, name);
+    return Objects.hash(destinationDNI, identification, name, secondaryIdentification);
   }
 
 
@@ -132,7 +138,7 @@ public class CreditorAccountDTO {
     
     sb.append("    destinationDNI: ").append(toIndentedString(destinationDNI)).append("\n");
     sb.append("    identification: ").append(toIndentedString(identification)).append("\n");
-    sb.append("    secundaryIdentification: ").append(toIndentedString(secundaryIdentification)).append("\n");
+    sb.append("    secondaryIdentification: ").append(toIndentedString(secondaryIdentification)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");
     return sb.toString();

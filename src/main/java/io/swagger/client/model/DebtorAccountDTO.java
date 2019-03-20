@@ -34,8 +34,8 @@ public class DebtorAccountDTO {
 	@SerializedName("identification")
 	private String identification = null;
 
-	@SerializedName("secundaryIdentification")
-	private String secundaryIdentification = null;
+	@SerializedName("secondaryIdentification")
+	private String secondaryIdentification = null;
 
 	@SerializedName("name")
 	private String name = null;
@@ -97,14 +97,21 @@ public class DebtorAccountDTO {
 		this.name = name;
 	}
 
-	public String getSecundaryIdentification() {
-		return secundaryIdentification;
+	@ApiModelProperty(value = "")
+	public String getSecondaryIdentification() {
+		return secondaryIdentification;
 	}
 
-	public void setSecundaryIdentification(String secundaryIdentification) {
-		this.secundaryIdentification = secundaryIdentification;
+	public void setSecondaryIdentification(String secundaryIdentification) {
+		this.secondaryIdentification = secundaryIdentification;
 	}
 
+	
+	public DebtorAccountDTO secundaryIdentification(String secundaryIdentification) {
+		this.secondaryIdentification = secundaryIdentification;
+		return this;
+	}
+	
 	@Override
 	public boolean equals(java.lang.Object o) {
 		if (this == o) {
@@ -116,13 +123,13 @@ public class DebtorAccountDTO {
 		DebtorAccountDTO debtorAccountDTO = (DebtorAccountDTO) o;
 		return Objects.equals(this.destinationDNI, debtorAccountDTO.destinationDNI)
 				&& Objects.equals(this.identification, debtorAccountDTO.identification)
-				&& Objects.equals(this.secundaryIdentification, debtorAccountDTO.secundaryIdentification)
+				&& Objects.equals(this.secondaryIdentification, debtorAccountDTO.secondaryIdentification)
 				&& Objects.equals(this.name, debtorAccountDTO.name);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(destinationDNI, identification, name);
+		return Objects.hash(destinationDNI, identification, name, secondaryIdentification);
 	}
 
 	@Override
@@ -132,7 +139,7 @@ public class DebtorAccountDTO {
 
 		sb.append("    destinationDNI: ").append(toIndentedString(destinationDNI)).append("\n");
 		sb.append("    identification: ").append(toIndentedString(identification)).append("\n");
-		sb.append("    secundaryIdentification: ").append(toIndentedString(secundaryIdentification)).append("\n");
+		sb.append("    secondaryIdentification: ").append(toIndentedString(secondaryIdentification)).append("\n");
 		sb.append("    name: ").append(toIndentedString(name)).append("\n");
 		sb.append("}");
 		return sb.toString();
@@ -148,5 +155,7 @@ public class DebtorAccountDTO {
 		}
 		return o.toString().replace("\n", "\n    ");
 	}
+	
+	
 
 }
