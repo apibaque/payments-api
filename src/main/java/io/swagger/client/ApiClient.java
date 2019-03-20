@@ -962,7 +962,8 @@ public class ApiClient {
      */
     public Call buildCall(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Request request = buildRequest(path, method, queryParams, collectionQueryParams, body, headerParams, formParams, authNames, progressRequestListener);
-
+        
+        
         return httpClient.newCall(request);
     }
 
@@ -1037,8 +1038,7 @@ public class ApiClient {
         final StringBuilder url = new StringBuilder();
         
 
-       logger.error("URL MS" + PAYMENTS_SERVICE_ENDPOINT);
-       System.out.println("URL: " + PAYMENTS_SERVICE_ENDPOINT );
+       logger.info("URL Microservice " + PAYMENTS_SERVICE_ENDPOINT);
 
         url.append(PAYMENTS_SERVICE_ENDPOINT).append(path);
         if (queryParams != null && !queryParams.isEmpty()) {
